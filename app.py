@@ -173,68 +173,6 @@ st.divider()
 
 
 # ==========================================
-# ENGAGEMENT ANALYSIS
-# ==========================================
-
-st.header("❤️ How are audiences engaging with TikTok videos?")
-
-st.write(
-    "Engagement rate measures likes and comments "
-    "as a percentage of video views."
-)
-
-# Calculate engagement rate if needed
-df["engagement_rate"] = (
-    (df["likes"] + df["comments"])
-    / df["views"].replace(0, float("nan"))
-    * 100
-).fillna(0)
-
-e1, e2, e3 = st.columns(3)
-
-e1.metric(
-    "Average Engagement Rate",
-    f"{df['engagement_rate'].mean():.2f}%"
-)
-
-e2.metric(
-    "Median Engagement Rate",
-    f"{df['engagement_rate'].median():.2f}%"
-)
-
-e3.metric(
-    "Highest Engagement Rate",
-    f"{df['engagement_rate'].max():.2f}%"
-)
-
-# Views versus likes
-fig_engagement = px.scatter(
-    df,
-    x="views",
-    y="likes",
-    hover_name="title_caption",
-    hover_data=["creator", "comments", "engagement_rate"],
-    labels={
-        "views": "Views",
-        "likes": "Likes"
-    },
-    title="Views vs Likes"
-)
-
-st.plotly_chart(
-    fig_engagement,
-    use_container_width=True
-)
-
-st.caption(
-    "The relationship between views and likes is descriptive "
-    "and does not establish causation."
-)
-
-st.divider()
-
-
-# ==========================================
 # HASHTAG ANALYSIS
 # ==========================================
 
