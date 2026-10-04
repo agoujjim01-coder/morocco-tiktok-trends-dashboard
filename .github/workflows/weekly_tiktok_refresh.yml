@@ -1,0 +1,42 @@
+
+name: Weekly TikTok Statistics Refresh
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * 1'
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pandas yt-dlp
+
+      - name: Refresh TikTok statistics
+        run: python scripts/refresh_tiktok.py
+
+      - name: Commit updated CSV
+        run: |
+          if git diff --quiet -- data/tiktok_dashboard_data.csv; then
+            echo "No statistics changed. Nothing to commit."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+            git add data/tiktok_dashboard_data.csv
+            git commit -m "Automated weekly TikTok statistics refresh"
+            git push
+          fi
