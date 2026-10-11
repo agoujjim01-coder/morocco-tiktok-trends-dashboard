@@ -283,7 +283,8 @@ st.dataframe(
             format="%.2f%%"
         ),
         "url": st.column_config.LinkColumn(
-            "Watch on TikTok"
+            "Watch on TikTok",
+            display_text="Watch video"
         )
     }
 )
