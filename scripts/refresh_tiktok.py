@@ -126,9 +126,10 @@ def refresh():
         print("Unrefreshed video IDs:", ", ".join(failures))
 
     if successes == 0:
-        print("No successful extractions. Original CSV left untouched.")
-        return
-
+        raise RuntimeError(
+              "TikTok refresh failed: 0 videos updated. "
+              "Original CSV left untouched."
+        )
     if len(df) != len(original):
         raise ValueError("Row count changed unexpectedly.")
 
