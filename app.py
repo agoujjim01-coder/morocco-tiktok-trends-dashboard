@@ -175,6 +175,39 @@ st.divider()
 # TOP ENGAGEMENT INSIGHTS
 # ==========================================
 
+st.subheader("📈 Engagement Rate vs. Views")
+
+fig_engagement_views = px.scatter(
+    df[df["views"] > 0],
+    x="views",
+    y="engagement_rate",
+    hover_name="title_caption",
+    hover_data=["creator", "likes", "comments"],
+    labels={
+        "views": "Video Views",
+        "engagement_rate": "Engagement Rate (%)"
+    },
+    title="Do More Views Mean Higher Engagement?"
+)
+
+fig_engagement_views.update_traces(
+    marker=dict(size=11, opacity=0.7)
+)
+
+st.plotly_chart(
+    fig_engagement_views,
+    use_container_width=True
+)
+
+st.caption(
+    "Each dot represents one video. "
+    "This chart shows the relationship between views "
+    "and engagement rate within the collected sample, "
+    "not a causal relationship."
+)
+
+st.divider()
+
 st.subheader("🏆 Top 5 Most Engaging Videos")
 
 top_engaging = df[df["views"] > 0].nlargest(
