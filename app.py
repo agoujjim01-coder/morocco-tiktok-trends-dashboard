@@ -181,6 +181,7 @@ fig_engagement_views = px.scatter(
     df[df["views"] > 0],
     x="views",
     y="engagement_rate",
+    log_x=True,
     hover_name="title_caption",
     hover_data=["creator", "likes", "comments"],
     labels={
