@@ -380,6 +380,44 @@ st.caption(
 st.divider()
 
 # ==========================================
+# MOROCCO RELEVANCE ANALYSIS
+# ==========================================
+
+st.header("🇲🇦 Morocco Relevance Analysis")
+
+morocco_keywords = [
+    "morocco", "maroc", "المغرب", "المغربية",
+    "casablanca", "الدار البيضاء",
+    "rabat", "الرباط",
+    "marrakech", "مراكش",
+    "tanger", "tangier", "طنجة",
+    "fes", "فاس",
+    "agadir", "أكادير",
+    "darija", "الدارجة",
+    "mawazine", "موازين"
+]
+
+caption_text = df["title_caption"].fillna("").astype(str).str.lower()
+
+df["morocco_mention"] = caption_text.apply(
+    lambda caption: any(
+        keyword in caption for keyword in morocco_keywords
+    )
+)
+
+morocco_count = int(df["morocco_mention"].sum())
+
+st.metric(
+    "Videos mentioning Morocco-related keywords",
+    f"{morocco_count} / {len(df)}"
+)
+
+st.caption(
+    "This is a keyword-based indicator using video captions. "
+    "It does not prove that a video is Moroccan or trending in Morocco."
+)
+
+# ==========================================
 # HASHTAG ANALYSIS
 # ==========================================
 
