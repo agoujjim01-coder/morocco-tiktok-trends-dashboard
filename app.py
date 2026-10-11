@@ -335,6 +335,43 @@ fig_creators = px.bar(
 
 st.plotly_chart(fig_creators, use_container_width=True)
 
+# ==========================================
+# TOP CREATORS BY ENGAGEMENT RATE
+# ==========================================
+
+st.subheader("🏆 Top Creators by Engagement Rate")
+
+top_engaged_creators = (
+    creator_stats[creator_stats["total_views"] > 0]
+    .nlargest(10, "engagement_rate")
+)
+
+st.dataframe(
+    top_engaged_creators[
+        ["creator", "videos", "total_views", "engagement_rate"]
+    ],
+    use_container_width=True,
+    hide_index=True,
+    column_config={
+        "creator": "TikTok Creator",
+        "videos": "Videos",
+        "total_views": st.column_config.NumberColumn(
+            "Total Views",
+            format="%d"
+        ),
+        "engagement_rate": st.column_config.NumberColumn(
+            "Engagement Rate (%)",
+            format="%.2f%%"
+        )
+    }
+)
+
+st.caption(
+    "Engagement rate = (total likes + total comments) "
+    "/ total views × 100. Rankings reflect only "
+    "videos in the collected dataset."
+)
+
 st.caption(
     "Creators are ranked by total views across videos "
     "in the collected dataset, not their entire TikTok accounts."
