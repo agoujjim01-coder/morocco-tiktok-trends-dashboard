@@ -296,6 +296,53 @@ st.caption(
 st.divider()
 
 # ==========================================
+# CREATOR PERFORMANCE ANALYSIS
+# ==========================================
+
+st.header("👥 Creator Performance Analysis")
+
+creator_stats = (
+    df.groupby("creator", dropna=False)
+    .agg(
+        videos=("video_id", "count"),
+        total_views=("views", "sum"),
+        total_likes=("likes", "sum"),
+        total_comments=("comments", "sum")
+    )
+    .reset_index()
+)
+
+creator_stats["engagement_rate"] = (
+    (creator_stats["total_likes"] + creator_stats["total_comments"])
+    / creator_stats["total_views"].replace(0, float("nan"))
+    * 100
+).fillna(0)
+
+top_creators = creator_stats.nlargest(10, "total_views")
+
+fig_creators = px.bar(
+    top_creators.sort_values("total_views"),
+    x="total_views",
+    y="creator",
+    orientation="h",
+    title="Top 10 Creators by Total Views",
+    labels={
+        "total_views": "Total Views",
+        "creator": "TikTok Creator"
+    },
+    hover_data=["videos", "engagement_rate"]
+)
+
+st.plotly_chart(fig_creators, use_container_width=True)
+
+st.caption(
+    "Creators are ranked by total views across videos "
+    "in the collected dataset, not their entire TikTok accounts."
+)
+
+st.divider()
+
+# ==========================================
 # HASHTAG ANALYSIS
 # ==========================================
 
