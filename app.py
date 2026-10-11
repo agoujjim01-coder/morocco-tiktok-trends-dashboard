@@ -221,9 +221,11 @@ st.subheader("💡 Key Insight")
 insight_df = df[df["views"] > 0].copy()
 
 if len(insight_df) >= 3:
-    correlation = insight_df["views"].corr(
-        insight_df["engagement_rate"],
-        method="spearman"
+    correlation = (
+        insight_df["views"].rank().corr(
+            insight_df["engagement_rate"].rank(),
+            method="pearson"
+        )
     )
 
     if pd.isna(correlation):
