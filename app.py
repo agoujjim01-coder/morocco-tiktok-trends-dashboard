@@ -171,6 +171,45 @@ st.caption(
 
 st.divider()
 
+# ==========================================
+# TOP ENGAGEMENT INSIGHTS
+# ==========================================
+
+st.subheader("🏆 Top 5 Most Engaging Videos")
+
+top_engaging = df[df["views"] > 0].nlargest(
+    5, "engagement_rate"
+)
+
+st.dataframe(
+    top_engaging[
+        [
+            "title_caption",
+            "creator",
+            "views",
+            "engagement_rate",
+            "url"
+        ]
+    ],
+    use_container_width=True,
+    hide_index=True,
+    column_config={
+        "engagement_rate": st.column_config.NumberColumn(
+            "Engagement Rate (%)",
+            format="%.2f%%"
+        ),
+        "url": st.column_config.LinkColumn(
+            "Watch on TikTok"
+        )
+    }
+)
+
+st.caption(
+    "Ranked by (likes + comments) / views × 100. "
+    "Results describe only the collected sample."
+)
+
+st.divider()
 
 # ==========================================
 # HASHTAG ANALYSIS
