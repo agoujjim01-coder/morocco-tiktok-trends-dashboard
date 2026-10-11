@@ -212,6 +212,49 @@ st.caption(
     "not a causal relationship."
 )
 
+# ==========================================
+# AUTOMATIC ENGAGEMENT INSIGHT
+# ==========================================
+
+st.subheader("💡 Key Insight")
+
+insight_df = df[df["views"] > 0].copy()
+
+if len(insight_df) >= 3:
+    correlation = insight_df["views"].corr(
+        insight_df["engagement_rate"],
+        method="spearman"
+    )
+
+    if pd.isna(correlation):
+        st.info(
+            "There is not enough variation in the data "
+            "to calculate a meaningful relationship."
+        )
+    elif correlation > 0.3:
+        st.info(
+            "📈 Videos with more views tend to have "
+            "higher engagement rates in this sample."
+        )
+    elif correlation < -0.3:
+        st.info(
+            "📉 Videos with more views tend to have "
+            "lower engagement rates in this sample."
+        )
+    else:
+        st.info(
+            "📊 There is no strong monotonic relationship "
+            "between views and engagement rates in this sample."
+        )
+
+    if pd.notna(correlation):
+        st.caption(
+            f"Spearman correlation: {correlation:.2f}. "
+            "This describes an association, not causation."
+        )
+else:
+    st.info("Not enough videos to calculate this insight.")
+    
 st.divider()
 
 st.subheader("🏆 Top 5 Most Engaging Videos")
