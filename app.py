@@ -194,6 +194,11 @@ fig_engagement_views = px.scatter(
 fig_engagement_views.update_traces(
     marker=dict(size=11, opacity=0.7)
 )
+fig_engagement_views.update_xaxes(
+    tickmode="array",
+    tickvals=[1000, 10000, 100000, 1000000, 10000000],
+    ticktext=["1K", "10K", "100K", "1M", "10M"]
+)
 
 st.plotly_chart(
     fig_engagement_views,
