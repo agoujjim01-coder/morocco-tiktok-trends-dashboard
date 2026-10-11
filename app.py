@@ -418,6 +418,48 @@ st.caption(
 )
 
 # ==========================================
+# MOROCCO-RELATED VIDEOS TABLE
+# ==========================================
+
+st.subheader("🇲🇦 Morocco-Related Trending Videos")
+
+morocco_videos = (
+    df[df["morocco_mention"]]
+    .sort_values("views", ascending=False)
+)
+
+st.dataframe(
+    morocco_videos[
+        ["title_caption", "creator", "views", "engagement_rate", "url"]
+    ],
+    use_container_width=True,
+    hide_index=True,
+    column_config={
+        "title_caption": "Video Caption",
+        "creator": "TikTok Creator",
+        "views": st.column_config.NumberColumn(
+            "Views",
+            format="%d"
+        ),
+        "engagement_rate": st.column_config.NumberColumn(
+            "Engagement Rate (%)",
+            format="%.2f%%"
+        ),
+        "url": st.column_config.LinkColumn(
+            "Watch on TikTok"
+        )
+    }
+)
+
+st.caption(
+    "Videos are ranked by views and selected using "
+    "Morocco-related keywords in their captions. "
+    "This does not verify popularity specifically within Morocco."
+)
+
+st.divider()
+
+# ==========================================
 # HASHTAG ANALYSIS
 # ==========================================
 
