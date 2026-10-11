@@ -427,11 +427,27 @@ morocco_videos = (
     df[df["morocco_mention"]]
     .sort_values("views", ascending=False)
 )
+# Let users choose which columns to display
+available_columns = {
+    "Video Caption": "title_caption",
+    "TikTok Creator": "creator",
+    "Views": "views",
+    "Engagement Rate (%)": "engagement_rate",
+    "Watch on TikTok": "url"
+}
+
+selected_columns = st.multiselect(
+    "Choose columns to display",
+    options=list(available_columns.keys()),
+    default=["TikTok Creator", "Views", "Engagement Rate (%)"]
+)
+
+display_columns = [
+    available_columns[name] for name in selected_columns
+]
 
 st.dataframe(
-    morocco_videos[
-        ["title_caption", "creator", "views", "engagement_rate", "url"]
-    ],
+    morocco_videos[display_columns],
     use_container_width=True,
     hide_index=True,
     column_config={
