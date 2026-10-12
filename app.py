@@ -284,8 +284,8 @@ st.dataframe(
         ),
         "url": st.column_config.LinkColumn(
             "Watch on TikTok",
-            display_text="Watch video"
-        )
+            display_text=r"tiktok\.com/@([^/]+)"
+         )
     }
 )
 
