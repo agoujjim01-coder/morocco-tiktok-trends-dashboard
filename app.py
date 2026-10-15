@@ -423,6 +423,12 @@ st.caption(
 # ==========================================
 
 st.subheader("🇲🇦 Morocco-Related Trending Videos")
+st.download_button(
+    label="📥 Download Morocco Videos (CSV)",
+    data=df[df["morocco_mention"]].to_csv(index=False).encode("utf-8-sig"),
+    file_name="morocco_tiktok_videos.csv",
+    mime="text/csv"
+)
 
 morocco_videos = (
     df[df["morocco_mention"]]
