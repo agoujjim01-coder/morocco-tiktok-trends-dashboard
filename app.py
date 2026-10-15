@@ -453,6 +453,21 @@ display_columns = [
     available_columns[name] for name in selected_columns
 ]
 
+# Filter Morocco-related videos by creator
+creator_options = sorted(
+    morocco_videos["creator"].dropna().unique().tolist()
+)
+
+selected_creator = st.selectbox(
+    "Filter by TikTok Creator",
+    options=["All Creators"] + creator_options
+)
+
+if selected_creator != "All Creators":
+    morocco_videos = morocco_videos[
+        morocco_videos["creator"] == selected_creator
+    ]
+    
 st.dataframe(
     morocco_videos[display_columns],
     use_container_width=True,
