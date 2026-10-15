@@ -23,7 +23,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install pandas yt-dlp
+        run: pip install pandas "yt-dlp[default] @ https://github.com/yt-dlp/yt-dlp/archive/refs/heads/master.tar.gz"
 
       - name: Refresh TikTok statistics
         run: python scripts/refresh_tiktok.py
